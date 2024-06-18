@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@types/html-to-text": "^9.0.4",
     "axios": "^1.7.2",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
@@ -9,13 +10,15 @@
   },
   "name": "noelle",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/srcs/index.js",
   "devDependencies": {
     "@types/node": "^20.14.2",
     "tsx": "^4.15.6"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node ."
   },
   "author": "XaipaniKaif",
   "license": "ISC",

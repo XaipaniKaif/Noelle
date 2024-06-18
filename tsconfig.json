@@ -12,7 +12,8 @@
     "outDir": "dist",
     "rootDir": ".",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["./@types/index"]
 
   },
   "exclude": ["node_modules", "dist"]
