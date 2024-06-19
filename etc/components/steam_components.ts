@@ -29,7 +29,7 @@ export default {
         const description = formatHtmlToText(result.about_the_game);
 
         let embed = new EmbedBuilder()
-        .setAuthor({name: result.developers.join(', ')})
+        .setAuthor({name: `Разработчики: ${result.developers.join(', ')}`})
         .setTitle(result.name)
         .setColor('Random')
         .setDescription(description)

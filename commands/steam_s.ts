@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, ComponentType, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, ComponentType, EmbedBuilder, Message } from "discord.js";
 import axios from "axios";
 import steam_components from "../etc/components/steam_components.js";
 
@@ -39,19 +39,24 @@ export default {
             let infoGames: EmbedBuilder;
             const gameDetailsUrl = `https://store.steampowered.com/api/appdetails?appids=${id}&l=${language || 'russian'}&cc=${currency || 'us'}`
 
-            const resultGameDetails = async (url:string) => {
+            const responseGameDetails = async (url:string) => {
+
                 const response = await axios({url: url})
                 .then((response) => {return response.data})
-                .catch(async (err) => {console.error(err); return await i.editReply(`Извините, произошла непридивиденная ошибка, попробуйте позже`)})
-                const data = response[id].data || response[id]
-                return data;
-            }
-            console.log(await resultGameDetails(gameDetailsUrl))
-            if ((await resultGameDetails(gameDetailsUrl)).success === false) {
+                .catch((err) => {console.error(err); return 'error'})
+                const data = response[id]?.data || response[id]
+
+                return data || response;
+            };
+            const dataGameDetails = await responseGameDetails(gameDetailsUrl)
+            if (dataGameDetails === 'error') return await i.editReply('Извините, произошла непредвиденная ошибка, попробуйте позже');
+
+            if (dataGameDetails.success === false) {
                 const gameDetailsRepetUrl = `https://store.steampowered.com/api/appdetails?appids=${id}&l=${language || 'russian'}&cc=us`;
-                infoGames = steam_components.infoGames(await resultGameDetails(gameDetailsRepetUrl), false)
+
+                infoGames = steam_components.infoGames(await responseGameDetails(gameDetailsRepetUrl), false);
             } else {
-                infoGames = steam_components.infoGames(await resultGameDetails(gameDetailsUrl))
+                infoGames = steam_components.infoGames(dataGameDetails)
             }
             await i.editReply({embeds: [infoGames]})
         })

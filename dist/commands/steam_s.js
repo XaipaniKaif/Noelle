@@ -29,20 +29,22 @@ export default {
             await i.deferReply();
             let infoGames;
             const gameDetailsUrl = `https://store.steampowered.com/api/appdetails?appids=${id}&l=${language || 'russian'}&cc=${currency || 'us'}`;
-            const resultGameDetails = async (url) => {
+            const responseGameDetails = async (url) => {
                 const response = await axios({ url: url })
                     .then((response) => { return response.data; })
-                    .catch(async (err) => { console.error(err); return await i.editReply(`Извините, произошла непридивиденная ошибка, попробуйте позже`); });
-                const data = response[id].data || response[id];
-                return data;
+                    .catch((err) => { console.error(err); return 'error'; });
+                const data = response[id]?.data || response[id];
+                return data || response;
             };
-            console.log(await resultGameDetails(gameDetailsUrl));
-            if ((await resultGameDetails(gameDetailsUrl)).success === false) {
+            const dataGameDetails = await responseGameDetails(gameDetailsUrl);
+            if (dataGameDetails === 'error')
+                return await i.editReply('Извините, произошла непредвиденная ошибка, попробуйте позже');
+            if (dataGameDetails.success === false) {
                 const gameDetailsRepetUrl = `https://store.steampowered.com/api/appdetails?appids=${id}&l=${language || 'russian'}&cc=us`;
-                infoGames = steam_components.infoGames(await resultGameDetails(gameDetailsRepetUrl), false);
+                infoGames = steam_components.infoGames(await responseGameDetails(gameDetailsRepetUrl), false);
             }
             else {
-                infoGames = steam_components.infoGames(await resultGameDetails(gameDetailsUrl));
+                infoGames = steam_components.infoGames(dataGameDetails);
             }
             await i.editReply({ embeds: [infoGames] });
         });
