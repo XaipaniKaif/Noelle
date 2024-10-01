@@ -1,9 +1,10 @@
-import { SlashCommandBuilder, PermissionsBitField } from "discord.js";
+import { SlashCommandBuilder, PermissionsBitField, InteractionContextType, ApplicationIntegrationType } from "discord.js";
 export default {
     data: new SlashCommandBuilder()
         .setName('clear')
         .setDescription('Очистка сообщений в чате')
-        .setDMPermission(false)
+        .setContexts([InteractionContextType.Guild])
+        .setIntegrationTypes([ApplicationIntegrationType.GuildInstall])
         .setNameLocalization('ru', 'очистка')
         .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
         .addIntegerOption(option => option.setName('count')

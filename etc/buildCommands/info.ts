@@ -1,10 +1,13 @@
-import { SlashCommandBuilder } from "discord.js";
+import { ApplicationIntegrationType, InteractionContextType, SlashCommandBuilder } from "discord.js";
 
 
 export default {
     data: new SlashCommandBuilder()
     .setName('info')
     .setDescription('Моя информация!')
-    .setDMPermission(false)
-    .setNameLocalizations({ru: 'инфо'})
+    .setContexts([InteractionContextType.BotDM])
+    .setIntegrationTypes(ApplicationIntegrationType.GuildInstall)
+    .setNameLocalization('ru', 'инфо')
+
+
 }

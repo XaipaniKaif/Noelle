@@ -6,4 +6,7 @@ export async function commandsInteraction(interaction: Interaction) {
     if (interaction.isChatInputCommand()) {
         await commandsHandler.slashHandler(interaction)
     }
+    if (interaction.isContextMenuCommand()) {
+        await commandsHandler.contextHandler(interaction)
+    }
 }

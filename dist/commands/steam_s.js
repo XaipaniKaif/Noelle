@@ -23,7 +23,7 @@ export default {
         });
         const listOfGames = await steam_components.listOfGames(listGames, interaction);
         const reply = await interaction.editReply({ embeds: [listOfGames.embed], components: [listOfGames.components] });
-        const collector = reply.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 120000 });
+        const collector = reply.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 120_000 });
         collector.on('collect', async (i) => {
             const id = i.values[0];
             await i.deferReply();

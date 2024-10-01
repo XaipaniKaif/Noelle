@@ -1,11 +1,12 @@
-import { SlashCommandBuilder } from "discord.js";
+import { ApplicationIntegrationType, InteractionContextType, SlashCommandBuilder } from "discord.js";
 
 
 export default {
     data: new SlashCommandBuilder()
     .setName('steam')
     .setDescription('Поиск игр по базе данных Steam')
-    .setDMPermission(false)
+    .setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
+    .setContexts([InteractionContextType.BotDM, InteractionContextType.Guild, InteractionContextType.PrivateChannel])
     .addStringOption(option =>
         option.setName('name')
             .setNameLocalizations({ru: 'название'})

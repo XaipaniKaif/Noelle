@@ -12,7 +12,7 @@ export default {
         if (!count && !time) {
             return await interaction.reply({ content: 'Для удаления сообщений необходим один из параметров: \`количество\` или \`время\`', ephemeral: true });
         }
-        const timeRangeMessage = time && time * 60000;
+        const timeRangeMessage = time && time * 60_000;
         await interaction.deferReply();
         let messageCollection;
         if (user) {
