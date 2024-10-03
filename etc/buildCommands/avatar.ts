@@ -8,5 +8,4 @@ export default {
     .setContexts([InteractionContextType.Guild, InteractionContextType.PrivateChannel])
     .setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall])
     .setType(2)
-    
 }

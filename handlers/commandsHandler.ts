@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { ChatInputCommandInteraction, ContextMenuCommandInteraction, AutocompleteInteraction } from 'discord.js'
+import { errorsDebug } from '../modules/errors.js';
 
 const slashCommands: Record<string, CommandsHandler> = {};
 const contexCommands: Record<string, CommandsHandler> = {};
@@ -39,6 +40,7 @@ export default {
             }
         } catch (error) {
             console.error(error)
+            await errorsDebug(interaction, error)
         }
     },
     async contextHandler(interaction: ContextMenuCommandInteraction) {
@@ -48,7 +50,7 @@ export default {
                 await contexCommands[commandName].execute(interaction);
             }
         } catch (error) {
-            console.error(error)
+            await errorsDebug(interaction, error)
         }
     },
     async autocomplate(autocomplate: AutocompleteInteraction) {

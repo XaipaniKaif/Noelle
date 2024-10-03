@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { errorsDebug } from '../modules/errors.js';
 const slashCommands = {};
 const contexCommands = {};
 const autocomplateCommands = {};
@@ -33,6 +34,7 @@ export default {
         }
         catch (error) {
             console.error(error);
+            await errorsDebug(interaction, error);
         }
     },
     async contextHandler(interaction) {
@@ -43,7 +45,7 @@ export default {
             }
         }
         catch (error) {
-            console.error(error);
+            await errorsDebug(interaction, error);
         }
     },
     async autocomplate(autocomplate) {

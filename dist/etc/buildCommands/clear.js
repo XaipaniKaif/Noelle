@@ -11,7 +11,7 @@ export default {
         .setNameLocalization('ru', 'количество')
         .setMinValue(1)
         .setMaxValue(100)
-        .setDescription('Укажите количество сообщений'))
+        .setDescription('Укажите количество сообщений (максимум 100)'))
         .addUserOption(option => option.setName('user')
         .setNameLocalization('ru', 'пользователь')
         .setDescription('Укажите пользователя'))

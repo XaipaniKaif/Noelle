@@ -2,6 +2,7 @@ import { EmbedBuilder } from "discord.js";
 export default {
     name: 'avatar',
     async execute(interaction) {
+        await interaction.deferReply();
         const user = interaction.targetUser;
         const guildUser = await interaction.guild?.members.fetch(user);
         const embed = new EmbedBuilder()
@@ -9,6 +10,6 @@ export default {
             .setColor('Random')
             .setTitle(`Аватар \`${guildUser?.nickname || user.displayName}\``)
             .setImage(guildUser?.displayAvatarURL({ size: 2048 }) || user.displayAvatarURL({ size: 2048 }));
-        await interaction.reply({ embeds: [embed] });
+        await interaction.editReply({ embeds: [embed] });
     }
 };

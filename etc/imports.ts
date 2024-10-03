@@ -1,12 +1,21 @@
-import { Interaction } from "discord.js";
+import { Interaction, StringSelectMenuInteraction } from "discord.js";
 import commandsHandler from "../handlers/commandsHandler.js";
 
 
-export async function commandsInteraction(interaction: Interaction) {
-    if (interaction.isChatInputCommand()) {
-        await commandsHandler.slashHandler(interaction)
+export default {
+    async commandsInteraction(interaction: Interaction) {
+        if (interaction.isChatInputCommand()) {
+            await commandsHandler.slashHandler(interaction)
+        }
+        if (interaction.isContextMenuCommand()) {
+            await commandsHandler.contextHandler(interaction)
+        }
+        if (interaction.isAutocomplete()) {
+            await commandsHandler.autocomplate(interaction)
+        }
+    },
+    async stringSelectInteraction(interaction: StringSelectMenuInteraction) {
+        
     }
-    if (interaction.isContextMenuCommand()) {
-        await commandsHandler.contextHandler(interaction)
-    }
+
 }

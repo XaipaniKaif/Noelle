@@ -2,17 +2,33 @@ import { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } from "discord
 import { htmlToText } from 'html-to-text';
 export default {
     async listOfGames(list, interaction) {
-        const client = await interaction.guild?.members.fetch(interaction.client.user).catch((err) => { console.error(err); return interaction.client.user; });
-        const embed = new EmbedBuilder()
-            .setAuthor({ name: client.nickname || client.displayName, iconURL: client.displayAvatarURL() })
-            .setTitle('Результат поиска')
-            .setColor('Green')
-            .setDescription(`По вашему запросу было найдено: \`${list.length}\` продуктов`);
-        const components = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder()
-            .setCustomId('listOfGames')
-            .setPlaceholder('Выберите продукт')
-            .addOptions(list));
-        return { embed, components };
+        if (interaction.guild) {
+            console.log(0);
+            const client = await interaction.guild.members.fetch(interaction.client.user).catch((err) => { console.error(err); return interaction.client.user; });
+            const embed = new EmbedBuilder()
+                .setAuthor({ name: client.nickname || client.displayName, iconURL: client.displayAvatarURL() })
+                .setTitle('Результат поиска')
+                .setColor('Green')
+                .setDescription(`По вашему запросу было найдено: \`${list.length}\` продуктов`);
+            const components = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder()
+                .setCustomId('listOfGames')
+                .setPlaceholder('Выберите продукт')
+                .addOptions(list));
+            return { embed, components };
+        }
+        else {
+            const embed = new EmbedBuilder()
+                .setAuthor({ name: interaction.client.user.displayName, iconURL: interaction.client.user.displayAvatarURL() })
+                .setTitle('Результат поиска')
+                .setColor('Green')
+                .setDescription(`По вашему запросу было найдено: \`${list.length}\` продуктов`);
+            const components = new ActionRowBuilder().addComponents(new StringSelectMenuBuilder()
+                .setCustomId('listOfGames')
+                .setPlaceholder('Выберите продукт')
+                .addOptions(list));
+            console.log(1);
+            return { embed, components };
+        }
     },
     infoGames(result, success) {
         function formatHtmlToText(text) {

@@ -22,7 +22,11 @@ export default {
             messageCollection = await interaction.channel?.messages.fetch({ limit: count && (count + 1) || 100 });
         }
         const resultMessage = await interaction.editReply({ embeds: [deleteState()] });
-        const messageCollectionDelete = messageCollection?.filter((message) => message.id !== resultMessage.id);
+        const messageCollectionDelete = messageCollection?.filter((message) => {
+            const currentTime = Date.now();
+            const checkTimeMessage = (currentTime - message.createdTimestamp) / (1000 * 60 * 60 * 24) > 14;
+            return !checkTimeMessage && message.id !== resultMessage.id;
+        });
         if (messageCollectionDelete?.size === 0) {
             return await interaction.editReply('Нет сообщений для удаления');
         }
@@ -48,7 +52,8 @@ export default {
             if (!user && !timeRangeMessage)
                 filterMessage = messageCollectionDelete;
             const result = await interaction.channel?.bulkDelete(filterMessage);
-            await interaction.editReply({ embeds: [(resultDeleteMessage(result.size, reason, user))] });
+            const reportResult = await interaction.editReply({ embeds: [(resultDeleteMessage(result.size, reason, user))] });
+            setTimeout(() => reportResult.delete().catch(() => { }), 15_000);
         }
     }
 };

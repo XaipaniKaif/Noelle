@@ -1,7 +1,7 @@
 import { Client, Events, GatewayIntentBits, Partials } from 'discord.js';
 import 'dotenv/config';
 import { registrCommands } from './registrCommands.js';
-import { commandsInteraction } from '../etc/imports.js';
+import  imports from '../etc/imports.js';
 
 const client = new Client({
     intents: [
@@ -21,9 +21,13 @@ const client = new Client({
 
 client.once('ready', async () => {
     console.log(`${client.user?.displayName} в сети!`)
-    await registrCommands()
+    //await registrCommands()
 })
 client.on(Events.InteractionCreate, async (interaction) => {
-    await commandsInteraction(interaction)
+    await imports.commandsInteraction(interaction)
+    if (interaction.isStringSelectMenu()) {
+        await imports.stringSelectInteraction(interaction)
+    }
+   
 })
 client.login(process.env.TOKEN);

@@ -17,7 +17,7 @@ export default {
         }
         const listGames = resultSearch.items.map((item) => {
             return {
-                label: item.name,
+                label: item.name.substring(0, 100),
                 value: item.id.toString()
             };
         });
