@@ -3,7 +3,6 @@ import { htmlToText } from 'html-to-text';
 export default {
     async listOfGames(list, interaction) {
         if (interaction.guild) {
-            console.log(0);
             const client = await interaction.guild.members.fetch(interaction.client.user).catch((err) => { console.error(err); return interaction.client.user; });
             const embed = new EmbedBuilder()
                 .setAuthor({ name: client.nickname || client.displayName, iconURL: client.displayAvatarURL() })
@@ -26,7 +25,6 @@ export default {
                 .setCustomId('listOfGames')
                 .setPlaceholder('Выберите продукт')
                 .addOptions(list));
-            console.log(1);
             return { embed, components };
         }
     },

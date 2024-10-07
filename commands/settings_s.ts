@@ -18,8 +18,8 @@ export default {
             const value = i.values[0]
              switch(value) {
                 case('welcom') : {
-                    collector.stop('selected')
                     await welcomSetting(i)
+                    collector.stop('selected')   
                 }
             }
         })
